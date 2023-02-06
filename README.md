@@ -8,7 +8,7 @@ These instructions are incomplete.
 
 1. Download exe  
   Press on this link to Download: https://github.com/1jamesthompson1/SalesforceTelefundDialer/raw/main/salesforceDialer.exe  
-  ![download](media\download.gif)
+  ![download](media/download.gif)
 
 2. Find exe in your download folder and double click  
   This will start the setup.
@@ -20,7 +20,7 @@ These instructions are incomplete.
 4. Open the program  
   This can be done by searhcing up Sales force dialer in the start menu.  
   Click on the Sales Force Dialer App  
-  ![opening](media\opening.png)
+  ![opening](media/opening.png)
 
 
 # Using
