@@ -3,12 +3,12 @@
 This is a simple script designed to hlep speed up the manual process of calling data from salesforce with the UCS dialer.
 
 # Installation and setup instructions
+
 These instructions are incomplete.
 
 1. Download exe  
   Press on this link to Download: https://github.com/1jamesthompson1/SalesforceTelefundDialer/raw/main/salesforceDialer.exe  
   ![download](media\download.gif)
-
 
 2. Find exe in your download folder and double click  
   This will start the setup.
