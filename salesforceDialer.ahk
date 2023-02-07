@@ -66,7 +66,7 @@ loop
     ; changeName := startupGUI.Add("Button", ,"Change name")
     ; changeName.OnEvent("Click", editName.Bind(editBox.Value))
 
-    GetCallingBtn := startupGUI.AddButton("Default w80", "Get calling!")
+    GetCallingBtn := startupGUI.AddButton("Default w80", "Ok")
     GetCallingBtn.OnEvent("Click", closeStartupGUI.Bind(startupGUI)) 
 
     startupGUI.Show
@@ -100,7 +100,7 @@ install(installLocation, shortcutLocation) {
   DirCreate installLocation
   FileMove A_ScriptName, installLocation
   SetWorkingDir installLocation
-  FileCreateShortcut A_ScriptName , shortcutLocation
+  FileCreateShortcut A_WorkingDir "\" A_ScriptName, shortcutLocation
 }
 
 ; THis script will go from being selected on the right cell to dialing the caller and upadting the call attempt
