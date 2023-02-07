@@ -32,7 +32,7 @@ loop
 
     MsgBox "Installed now time to setup!"
     CoordMode "Mouse"
-    MsgBox "Please press on the search bar", programName
+    MsgBox "Please press on the phone number", programName
     MouseDisabling := true
     sleep 200
     KeyWait "LButton", "D"
@@ -112,11 +112,15 @@ dial(phoneX, phoneY) {
   Send "{Enter}"
   MsgBox "Has the leads record loaded?", "Waiting for phone load", "T3"
 
+
+  
   MouseClick "left", phoneX, phoneY, 2
+
+  Sleep 100
 
   Send "^c"
 
-  Sleep 50
+  Sleep 100
 
   ; Process the phone number so that it can be called
   phoneNumber := A_Clipboard
@@ -129,8 +133,6 @@ dial(phoneX, phoneY) {
 
   WinWait "FormCallAssistance"
 	WinActivate
-
-  MsgBox formattedPhoneNumber
 
   Send formattedPhoneNumber
 
