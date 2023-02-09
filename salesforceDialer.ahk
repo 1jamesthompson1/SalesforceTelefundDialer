@@ -2,7 +2,7 @@
 SendMode "Input"
 SetWorkingDir A_ScriptDir
 
-programName := "Salesforce Dialer v0.0.1"
+programName := "Salesforce Dialer v0.0.2"
 
 MouseDisabling := false
 
@@ -105,13 +105,14 @@ install(installLocation, shortcutLocation) {
 
 ; THis script will go from being selected on the right cell to dialing the caller and upadting the call attempt
 dial(phoneX, phoneY) {
+  Sleep 200
   Send "{Enter}"
-  Sleep 50
+  Sleep 300
   Send "{Down}"
-  Sleep 50
+  Sleep 300
   Send "{Enter}"
+  Sleep 300
   MsgBox "Has the leads record loaded?", "Waiting for phone load", "T3"
-
 
   
   MouseClick "left", phoneX, phoneY, 2
@@ -125,6 +126,12 @@ dial(phoneX, phoneY) {
   ; Process the phone number so that it can be called
   phoneNumber := A_Clipboard
   
+  if (StrLen(phoneNUmber) < 8) {
+    MsgBox(StrLen(phoneNumber))
+    MsgBox("I beleive there is something wrong with the phone number.`nThis is what I have: " phoneNumber, "Error in phone number")
+    return
+  }
+
   if (SubStr(phoneNumber, 1, 2) == "64") {
     formattedPhoneNumber := "10" SubStr(phoneNumber, 3)
   } else {
@@ -138,9 +145,10 @@ dial(phoneX, phoneY) {
 
   Send "{Enter}"
 
-  ; Move back to the browser
-  WinWait "chrome.exe"
-	WinActivate
+  ; ; Move back to the browser
+  ; WinWait "chrome.exe"
+	; WinActivate
+  return
 }
 
 Rctrl::F14
@@ -149,8 +157,9 @@ Rctrl::F14
 F14::
 {
   dial(phoneNumberX, phoneNumberY)
+  return
 }
-return
+
 
 #HotIf  MouseDisabling
 LButton::return
