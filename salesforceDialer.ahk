@@ -43,17 +43,9 @@ loop
 
     writeToConfig("phoneNumberX", phoneNumberX)
     writeToConfig("phoneNumberY", phoneNumberY)
-
-    ; userName := InputBox("What is your name?", "Seting up" programName)
-    ; if (userName.Result = "Cancel") 
-    ;   ExitApp
-
-    ; writeToConfig("userName", userName.value)
   }
   else
   { 
-
-    ; userName := readConfig("userName")
 
     phoneNumberX := readConfig("phoneNumberX")
     phoneNumberY := readConfig("phoneNumberY")
@@ -61,10 +53,6 @@ loop
     startupGUI := Gui(,programName)
     startupGUI.Add("Text",, "Welcome to the Salesforce dialer")
     
-    ; startupGUI.Add("Text",, "Your current user name is:")
-    ; editBox := startupGUI.Add("Edit", "r1", userName)
-    ; changeName := startupGUI.Add("Button", ,"Change name")
-    ; changeName.OnEvent("Click", editName.Bind(editBox.Value))
 
     GetCallingBtn := startupGUI.AddButton("Default w80", "Ok")
     GetCallingBtn.OnEvent("Click", closeStartupGUI.Bind(startupGUI)) 
@@ -105,13 +93,17 @@ install(installLocation, shortcutLocation) {
 
 ; THis script will go from being selected on the right cell to dialing the caller and upadting the call attempt
 dial(phoneX, phoneY) {
-  Sleep 200
+  Sleep 100
+  Send "{Esc}"
+  Sleep 400
   Send "{Enter}"
-  Sleep 300
+  Sleep 400
+  Send "{Enter}"
+  Sleep 400
   Send "{Down}"
-  Sleep 300
+  Sleep 400
   Send "{Enter}"
-  Sleep 300
+  Sleep 400
   MsgBox "Has the leads record loaded?", "Waiting for phone load", "T3"
 
   
@@ -123,19 +115,25 @@ dial(phoneX, phoneY) {
 
   Sleep 100
 
-  ; Process the phone number so that it can be called
-  phoneNumber := A_Clipboard
   
-  if (StrLen(phoneNUmber) < 8) {
-    MsgBox(StrLen(phoneNumber))
-    MsgBox("I beleive there is something wrong with the phone number.`nThis is what I have: " phoneNumber, "Error in phone number")
+  phoneNumber := A_Clipboard
+
+  ; Check if it is long enough
+  if (StrLen(phoneNumber) < 8) {
+    MsgBox("I believe there is something wrong with the phone number in this Salesforce lead.`nThis is what I have copied: " phoneNumber, "Error in phone number")
     return
   }
-
+  
+  ; Process the phone number so that it can be called
   if (SubStr(phoneNumber, 1, 2) == "64") {
     formattedPhoneNumber := "10" SubStr(phoneNumber, 3)
-  } else {
+  } else if (SubStr(phoneNumber, 1, 3) == "+64") {
+    formattedPhoneNumber := "10" SubStr(phoneNumber, 4)
+  } else if (SubStr(phoneNumber, 1, 1) == "0") {
     formattedPhoneNumber := "1" phoneNumber
+  } else {
+    MsgBox("Sorry I cannot format:" phoneNumber " into a number for UCS.`nPlease manually dial this one.", "Cant format")
+    return
   }
 
   WinWait "FormCallAssistance"
@@ -144,10 +142,6 @@ dial(phoneX, phoneY) {
   Send formattedPhoneNumber
 
   Send "{Enter}"
-
-  ; ; Move back to the browser
-  ; WinWait "chrome.exe"
-	; WinActivate
   return
 }
 
